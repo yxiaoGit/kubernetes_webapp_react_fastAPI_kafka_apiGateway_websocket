@@ -11,13 +11,16 @@
       backend start update the product price every 1 second after get the request,
       and send via web socket to be refreshed on UI.
      
-
    -  User can summit a bid to the product, the submitted price is sent via the websocket, then API Gateway
       relay this bid price to backend server, which created Kafka topic producer and consumer when pod started,
       now add an Kafka event for the bid_topic queue with the bid price and product name.
       The two worker processes (running in two pods which also created a Kafka topic producer verdict_topic
       and consumer bid_topic) which subscribed to the topic then process the message and randomly choose to
       accept or decline the offer. The aggregated results then send back to the UI and display.
+
+  - backend has the web socket open for simultaneous update price in an async loop and process bid/offer results.
+   
+  - worker process need to wait a short time about 2 mins to start in order for the Kafka broker fully started.
           
 
 ## Runbook:  
@@ -29,7 +32,7 @@
      - run_worker.sh
 
 
-## the UI 
+## UI 
 <img src="screenshot.png" width="500">
 
 ### the kafka broker for local testing is deployed as a pod, to deployy as StatefulSet, following is 
