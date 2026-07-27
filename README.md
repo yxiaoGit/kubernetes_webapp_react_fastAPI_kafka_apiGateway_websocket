@@ -7,9 +7,10 @@
    - frontend UI fetch the product name via restful POST request, API gateway send the request based on
      path matching to the backend process which then query database and send response back to UI.
     
-   -  When application start, there is a websocket open from UI to connect with API gateway, 
-      once the product is fetched, the product price is updated every 1 second and refreshed on UI
-      via the websocket.
+   -  Once the product is fetched, UI open a websocket to connect with API gateway ,
+      backend update the product price every 1 second and send via web socket to be
+      refreshed on UI.
+     
 
    -  User can summit a bid to the product, the submitted price is sent via the websocket, then API Gateway
       relay this bid price to backend server, which will create an Kafka event and add the bid price 
