@@ -29,6 +29,8 @@
      - run_worker.sh
 
 
+## the UI 
+<img src="screenshot.png" width="500">
 
 ### the kafka broker for local testing is deployed as a pod, to deployy as StatefulSet, following is 
     the notes from Google AI:
