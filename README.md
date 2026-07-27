@@ -7,19 +7,18 @@
    - frontend UI fetch the product name via restful POST request, API gateway send the request based on
      path matching to the backend process which then query database and send response back to UI.
     
-   -  Once the product is fetched, UI open a websocket to connect with API gateway ,
-      backend update the product price every 1 second and send via web socket to be
-      refreshed on UI.
+   -  Once the product is fetched, UI connect to  websocket and send request via /ws path,
+      backend start update the product price every 1 second after get the request,
+      and send via web socket to be refreshed on UI.
      
 
    -  User can summit a bid to the product, the submitted price is sent via the websocket, then API Gateway
-      relay this bid price to backend server, which will create an Kafka event and add the bid price 
-      and product name to the event queue of the bid topic. The two worker processes (running in two pods)
-      which subscribed to the topic then process the message and randomly choose to accept or decline the
-      offer. The aggregated results then send back to the UI and display.
-
-    
-    
+      relay this bid price to backend server, which created Kafka topic producer and consumer when pod started,
+      now add an Kafka event for the bid_topic queue with the bid price and product name.
+      The two worker processes (running in two pods which also created a Kafka topic producer verdict_topic
+      and consumer bid_topic) which subscribed to the topic then process the message and randomly choose to
+      accept or decline the offer. The aggregated results then send back to the UI and display.
+          
 
 ## Runbook:  
   1. first source minikube_start.sh , then ./run.sh
